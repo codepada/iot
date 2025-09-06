@@ -6,7 +6,8 @@ input.onButtonPressed(Button.B, function () {
     MQTT.b2MQTT("light : " + input.lightLevel())
 })
 MQTT.onEsp32DataReceived(function (data) {
-    if (data == "ok") {
+    MQTT.b2MQTT("" + (data))
+    if (data == "ไทย") {
         basic.showIcon(IconNames.Heart)
         basic.pause(500)
         basic.clearScreen()
