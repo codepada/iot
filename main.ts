@@ -4,6 +4,9 @@ input.onButtonPressed(Button.A, function () {
 input.onButtonPressed(Button.B, function () {
     MQTT.b2MQTT("Temp : " + input.temperature())
 })
+MQTT.onEsp32DataReceived(function (data) {
+	
+})
 let irsensor = 0
 MQTT.initializeUART(SerialPin.P1, SerialPin.P2)
 MQTT.setConnectionInfo("microbit-control", "InwO", "11222222")

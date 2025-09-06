@@ -1,3 +1,6 @@
+
+
+
 //% color="#AA278D" weight=100
 namespace MQTT {
 
@@ -59,9 +62,17 @@ namespace MQTT {
 
 
     //% block="sent data %data"
+    //% data.defl="hello"
     export function b2MQTT(data: any): void {
         basic.showString("S");
-        let status_json = '{"deviceId": "' + uniqueId_var + '", "data":"' + data + '"}';
+        let convertedData: string;
+        // ตรวจสอบประเภทของข้อมูลและแปลงให้เป็นข้อความ
+        if (typeof data === "number") {
+            convertedData = data.toString();
+        } else {
+            convertedData = data;
+        }
+        let status_json = '{"deviceId": "' + uniqueId_var + '", "data":"' + convertedData + '"}';
         serial.writeLine(status_json + "\n");
 
     }
