@@ -62,18 +62,12 @@ namespace MQTT {
 
 
     //% block="sent data %data"
-    //% data.defl="hello"
-    export function b2MQTT(data: any): void {
-        basic.showString("S");
-        let convertedData: string;
-        // ตรวจสอบประเภทของข้อมูลและแปลงให้เป็นข้อความ
-        if (typeof data === "number") {
-            convertedData = data.toString();
-        } else {
-            convertedData = data;
-        }
-        let status_json = '{"deviceId": "' + uniqueId_var + '", "data":"' + convertedData + '"}';
+    //% data.shadowOptions.toString=true
+    export function b2MQTT(data: string): void {
+        
+        let status_json = '{"deviceId": "' + uniqueId_var + '", "data":"' + data + '"}';
         serial.writeLine(status_json + "\n");
+        
 
     }
 
