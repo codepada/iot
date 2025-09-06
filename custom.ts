@@ -64,7 +64,6 @@ namespace MQTT {
     //% block="sent data %data"
     //% data.shadowOptions.toString=true
     export function b2MQTT(data: string): void {
-        
         let status_json = '{"deviceId": "' + uniqueId_var + '", "data":"' + data + '"}';
         serial.writeLine(status_json + "\n");
         
@@ -136,6 +135,7 @@ namespace MQTT {
                 // สร้างและส่งข้อความ JSON กลับไป
                 let status_json = '{"deviceId": "' + uniqueId_var + '", "pins": {"' + selectedPinName + '": ' + value + '}}';
                 serial.writeLine(status_json + "\n");
+                
             }
         }
     }
