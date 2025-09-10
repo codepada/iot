@@ -1,7 +1,7 @@
 
 
 
-//% color="#AA278D" weight=100
+//% color="#AA278D" weight=100 groups='["Connect", "Broadcast", "Send", "Receive"]'
 namespace MQTT {
 
     let uniqueId_var = "";
@@ -11,10 +11,12 @@ namespace MQTT {
     let mqttPort_var = "1883";
     let onReceivedHandler: (data: string) => void;
 
-    //% block="set connection info uniqueId %uniqueId|SSID %ssid|Password %password"
+    //% block="Set connection info|uniqueId %uniqueId|SSID %ssid|Password %password"
     //% uniqueId.defl="microbit-control"
     //% ssid.defl="InwO"
     //% password.defl="11222222"
+    //% group="Connect"
+    //% inlineInputMode=external
     export function setConnectionInfo(uniqueId: string, ssid: string, password: string): void {
         uniqueId_var = uniqueId;
         ssid_var = ssid;
@@ -24,6 +26,7 @@ namespace MQTT {
     //% block="initialize UART Tx pin %tx|Rx pin %rx"
     //% tx.defl=SerialPin.P1
     //% rx.defl=SerialPin.P2
+    //% group="Connect"
     export function initializeUART(tx: SerialPin, rx: SerialPin): void {
         // Initialize UART with the provided pins
         serial.redirect(
@@ -35,6 +38,7 @@ namespace MQTT {
     }
 
     //% block="connect"
+    //% group="Connect"
     export function connect(): void {
         basic.pause(4000)
         let config_data = "CONFIG_DATA:" + uniqueId_var + "," + ssid_var + "," + password_var + "," + mqttBroker_var + "," + mqttPort_var;
@@ -44,6 +48,7 @@ namespace MQTT {
 
     //% block="on MQTT data received"
     //% draggableParameters
+    //% group="Receive"
     export function onEsp32DataReceived(handler: (data: string) => void): void {
         onReceivedHandler = handler;
         serial.onDataReceived('\n', function () {
@@ -63,10 +68,11 @@ namespace MQTT {
 
     //% block="sent data %data"
     //% data.shadowOptions.toString=true
+    //% group="Send"
     export function b2MQTT(data: string): void {
         let status_json = '{"deviceId": "' + uniqueId_var + '", "data":"' + data + '"}';
         serial.writeLine(status_json + "\n");
-        
+
 
     }
 
@@ -109,7 +115,7 @@ namespace MQTT {
     //% block="Pin Control %pin| with %data"
     //% pin.fieldEditor="gridpicker"
     //% pin.fieldOptions.columns=3
-
+    //% group="Receive"
     export function setPinIfMatch(pin: PinChannel, data: string): void {
         const parts = data.split("=");
         if (parts.length === 2) {
@@ -135,8 +141,9 @@ namespace MQTT {
                 // สร้างและส่งข้อความ JSON กลับไป
                 let status_json = '{"deviceId": "' + uniqueId_var + '", "pins": {"' + selectedPinName + '": ' + value + '}}';
                 serial.writeLine(status_json + "\n");
-                
+
             }
         }
     }
 }
+
