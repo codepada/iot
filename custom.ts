@@ -13,8 +13,8 @@ namespace MQTT {
 
     //% block="Set connection info|uniqueId %uniqueId|SSID %ssid|Password %password"
     //% uniqueId.defl="microbit-control"
-    //% ssid.defl="InwO"
-    //% password.defl="11222222"
+    //% ssid.defl="wifi-name"
+    //% password.defl="wifi-password"
     //% group="Connect"
     //% inlineInputMode=external
     export function setConnectionInfo(uniqueId: string, ssid: string, password: string): void {
@@ -66,7 +66,7 @@ namespace MQTT {
     }
 
 
-    //% block="sent data %data"
+    //% block="send data %data "
     //% data.shadowOptions.toString=true
     //% group="Send"
     export function b2MQTT(data: string): void {
